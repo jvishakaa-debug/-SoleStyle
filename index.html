@@ -70,13 +70,12 @@
 <div class="footer">
     <p>© 2026 SoleStyle | All Rights Reserved</p>
 </div>
-
 <script>
 let cart=[];
 function addToCart(name, price){
     cart.push({name, price});
     document.getElementById('cart-count').innerText = cart.length;
-    alert(name + ' added pa! 🛒');
+    openCart();
 }
 function openCart(){
     let list = document.getElementById('cart-list');
@@ -87,14 +86,29 @@ function openCart(){
     document.getElementById('checkoutModal').style.display='flex';
 }
 function closeCart(){ document.getElementById('checkoutModal').style.display='none'; }
+
 function placeOrder(){
+    if(cart.length === 0){ 
+        alert('Cart empty pa! First add product pa! 🛒'); 
+        return; 
+    }
     let name=document.getElementById('cname').value;
     let phone=document.getElementById('cphone').value;
     let addr=document.getElementById('caddress').value;
     if(!name||!phone||!addr){ alert('Full details fill pannunga pa!'); return; }
-    document.getElementById('successMsg').innerText = `Super pa ${name}! Order Placed! ₹${document.getElementById('total').innerText} - We will call you pa! 🎉`;
-    cart=[]; document.getElementById('cart-count').innerText=0;
-    setTimeout(closeCart, 3000);
+    
+    let total = cart.reduce((s,p)=>s+p.price,0);
+    document.getElementById('successMsg').innerText = `Super pa ${name}! Order Placed! ₹${total} - We will call you pa! 🎉`;
+    
+    cart=[]; 
+    document.getElementById('cart-count').innerText=0;
+    document.getElementById('cname').value="";
+    document.getElementById('cphone').value="";
+    document.getElementById('caddress').value="";
+    setTimeout(()=>{
+        closeCart();
+        document.getElementById('successMsg').innerText="";
+    }, 3000);
 }
 </script>
 </body>
