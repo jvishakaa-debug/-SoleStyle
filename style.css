@@ -17,3 +17,16 @@ footer{background:#111;color:#fff;text-align:center;padding:20px;margin-top:30px
 .three h2{font-size:32px;margin-bottom:10px}
 .three p{max-width:700px;margin:0 auto;color:#555;line-height:1.6}
 .footer{background:black;color:white;text-align:center;padding:15px}
+.card:hover{
+  background:#FF6B6B;
+  color:white;
+  transform:scale(1.05);
+  transition:0.3s;
+}
+.card:hover p{
+  color:white;
+}
+.card:hover button{
+  background:white;
+  color:#FF6B6B;
+}
