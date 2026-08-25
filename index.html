@@ -43,7 +43,7 @@ footer{text-align:center;padding:30px;background:var(--header);margin-top:20px;b
 <input type="text" id="searchInput" placeholder="🔍 Search shoes..." onkeyup="searchProducts()">
 <button class="icon-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
 <button class="icon-btn">❤️<span id="wishCount">0</span></button>
-<button class="icon-btn">🛒<span id="cartCount">0</span></button>
+<button class="icon-btn" onclick="openCheckout()">🛒<span id="cartCount">0</span></button>
 </div>
 </header>
 <div class="controls">
@@ -56,6 +56,18 @@ footer{text-align:center;padding:30px;background:var(--header);margin-top:20px;b
 </div>
 <div class="products" id="productGrid"></div>
 <footer><p>© 2025 SoleStyle | 📞 Contact: 99999 99999 | ✉️ solestyle@gmail.com | SoleStyle Premium Shoes</p></footer>
+<div id="checkoutModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;justify-content:center;align-items:center">
+<div style="background:var(--card);padding:30px;border-radius:15px;width:90%;max-width:400px">
+<h2>🛒 Place Order</h2>
+<p style="margin:15px 0">Total Items: <span id="orderCount">0</span></p>
+<input id="custName" placeholder="Your Name" style="width:100%;padding:10px;margin:5px 0;border-radius:8px;border:1px solid #ddd">
+<input id="custPhone" placeholder="Phone Number" style="width:100%;padding:10px;margin:5px 0;border-radius:8px;border:1px solid #ddd">
+<input id="custAddr" placeholder="Address" style="width:100%;padding:10px;margin:5px 0;border-radius:8px;border:1px solid #ddd">
+<button onclick="placeOrder()" style="width:100%;padding:12px;background:var(--accent);color:white;border:none;border-radius:8px;margin-top:10px;font-weight:700">Confirm Order ✅</button>
+<button onclick="document.getElementById('checkoutModal').style.display='none'" style="width:100%;padding:10px;background:transparent;border:1px solid var(--accent);color:var(--accent);border-radius:8px;margin-top:10px">Cancel</button>
+</div>
+</div>
+
 <script>
 const products=[
 {name:"Air Max Runner",price:2999,img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500"},
@@ -77,6 +89,8 @@ function sortProducts(){const v=document.getElementById('sortSelect').value;if(v
 function addCart(){cart++;document.getElementById('cartCount').innerText=cart;}
 function addWish(){wish++;document.getElementById('wishCount').innerText=wish;}
 function toggleTheme(){document.body.classList.toggle('dark');document.getElementById('themeBtn').innerText=document.body.classList.contains('dark')?'☀️':'🌙';}
+function openCheckout(){document.getElementById('orderCount').innerText=cart;document.getElementById('checkoutModal').style.display='flex';}
+function placeOrder(){const name=document.getElementById('custName').value;if(!name){alert('Name enter pannunga pa!');return;}alert(`Thank you ${name} pa! Order placed! ${cart} items! 🎉`);document.getElementById('checkoutModal').style.display='none';cart=0;document.getElementById('cartCount').innerText='0';}
 render(products);
 </script>
 </body>
