@@ -3,9 +3,13 @@
 <head>
     <title>SoleStyle - Step into Style</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        #checkoutModal{display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:9999;}
+        .modal{background:white; padding:30px; border-radius:15px; width:380px; max-height:90vh; overflow-y:auto;}
+        .modal input{width:95%; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ccc;}
+    </style>
 </head>
 <body>
-
 <nav>
     <h1>SOLESTYLE</h1>
     <ul>
@@ -13,49 +17,85 @@
         <li>Products</li>
         <li>About</li>
         <li>Contact</li>
-        <li>🛒 Cart (<span id="cart-count">0</span>)</li>
+        <li onclick="openCart()" style="cursor:pointer">🛒 Cart (<span id="cart-count">0</span>)</li>
     </ul>
 </nav>
-
 <div class="footwear">
     <div class="card">
         <img src="https://via.placeholder.com/200x180?text=Heels" alt="Heels">
         <h3>Women's Heeled Sandal</h3>
-        <p class="price">₹1,299</p>
-        <button>Buy Now</button>
+        <p class="price">₹1299</p>
+        <button onclick="addToCart('Women\'s Heeled Sandal', 1299)">Buy Now</button>
     </div>
     <div class="card">
         <img src="https://via.placeholder.com/200x180?text=Formal" alt="Formal Shoe">
         <h3>Men's Formal Shoe</h3>
-        <p class="price">₹1,899</p>
-        <button>Buy Now</button>
+        <p class="price">₹1899</p>
+        <button onclick="addToCart('Men\'s Formal Shoe', 1899)">Buy Now</button>
     </div>
     <div class="card">
         <img src="https://via.placeholder.com/200x180?text=Sneaker" alt="Sneaker">
         <h3>Trendy Sneaker</h3>
-        <p class="price">₹1,499</p>
-        <button>Buy Now</button>
+        <p class="price">₹1499</p>
+        <button onclick="addToCart('Trendy Sneaker', 1499)">Buy Now</button>
     </div>
     <div class="card">
         <img src="https://via.placeholder.com/200x180?text=Loafer" alt="Loafer">
         <h3>Classic Loafer</h3>
-        <p class="price">₹1,199</p>
-        <button>Buy Now</button>
+        <p class="price">₹1199</p>
+        <button onclick="addToCart('Classic Loafer', 1199)">Buy Now</button>
     </div>
 </div>
-
 <div class="three">
     <h2>About SoleStyle</h2>
     <p>SoleStyle is your trusted online destination for premium footwear. Comfort, Style and Affordable Price for Everyone.</p>
 </div>
-<div id="cart-section" style="padding:20px; text-align:center;">
-    <h2>Your Cart</h2>
-    <div id="cart-list">
-        <p>Your cart is empty</p>  <!-- Line 53: Itha than pa "Empty pa!" badhila maathi irukku -->
+
+<div id="checkoutModal">
+    <div class="modal">
+        <h2>Your Cart 🛒</h2>
+        <div id="cart-list">Your cart is empty pa!</div>
+        <h3 id="total"></h3>
+        <hr>
+        <h3>Checkout Form</h3>
+        <input id="cname" placeholder="Full Name">
+        <input id="cphone" placeholder="Phone Number">
+        <input id="caddress" placeholder="Full Address">
+        <button onclick="placeOrder()" style="width:100%; background:#e91e63; color:white; padding:12px; border:none; border-radius:8px; margin-top:10px;">Place Order ✅</button>
+        <button onclick="closeCart()" style="width:100%; background:#ccc; padding:10px; border:none; border-radius:8px; margin-top:5px;">Close</button>
+        <p id="successMsg" style="color:green; font-weight:bold; text-align:center;"></p>
     </div>
 </div>
+
 <div class="footer">
     <p>© 2026 SoleStyle | All Rights Reserved</p>
 </div>
+
+<script>
+let cart=[];
+function addToCart(name, price){
+    cart.push({name, price});
+    document.getElementById('cart-count').innerText = cart.length;
+    alert(name + ' added pa! 🛒');
+}
+function openCart(){
+    let list = document.getElementById('cart-list');
+    if(cart.length==0){ list.innerHTML='Empty pa! Add something pa!'; }
+    else{ list.innerHTML = cart.map(p=>`<p>${p.name} - ₹${p.price}</p>`).join(''); }
+    let total = cart.reduce((s,p)=>s+p.price,0);
+    document.getElementById('total').innerText = 'Total: ₹' + total;
+    document.getElementById('checkoutModal').style.display='flex';
+}
+function closeCart(){ document.getElementById('checkoutModal').style.display='none'; }
+function placeOrder(){
+    let name=document.getElementById('cname').value;
+    let phone=document.getElementById('cphone').value;
+    let addr=document.getElementById('caddress').value;
+    if(!name||!phone||!addr){ alert('Full details fill pannunga pa!'); return; }
+    document.getElementById('successMsg').innerText = `Super pa ${name}! Order Placed! ₹${document.getElementById('total').innerText} - We will call you pa! 🎉`;
+    cart=[]; document.getElementById('cart-count').innerText=0;
+    setTimeout(closeCart, 3000);
+}
+</script>
 </body>
 </html>
