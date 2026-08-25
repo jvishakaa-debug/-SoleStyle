@@ -2,6 +2,8 @@
 body{background:#FFF5F3}
 nav{display:flex;justify-content:space-between;align-items:center;padding:15px 30px;background:#111;color:#fff}
 nav ul{display:flex;list-style:none;gap:20px}
+nav ul li{cursor:pointer;transition:0.3s}
+nav ul li:hover{color:#FF6B6B}
 .footwear{display:grid;grid-template-columns:repeat(4,1fr);gap:25px;padding:30px}
 .card{border:none;border-radius:16px;padding:20px;text-align:center;background:#fff;box-shadow:0 4px 15px rgba(0,0,0,0.08)}
 .card img{width:100%;height:180px;object-fit:cover;border-radius:8px}
